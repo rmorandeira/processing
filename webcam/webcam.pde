@@ -17,7 +17,7 @@ import processing.video.*;
 Capture cam;
 
 void setup() {
-  size(640, 480);
+  size(640, 480,P3D);
 
   String[] cameras = Capture.list();
   
@@ -41,8 +41,27 @@ void draw() {
   if (cam.available() == true) {
     cam.read();
   }
-  image(cam, 0, 0);
+  invert();
+  
   // The following does the same, and is faster when just drawing the image
   // without any additional resizing, transformations, or tint.
   //set(0, 0, cam);
+}
+
+void invert(){
+   
+  //image(cam, 0, 0);
+  background(0);
+    loadPixels();
+    cam.loadPixels();
+  for(int x=0;x<width;x++){
+    for(int y=0;y<height;y++){
+      int pos = x+y*width;
+      
+      pixels[pos] = cam.pixels[pos];
+    }
+    
+  
+  }
+  
 }
